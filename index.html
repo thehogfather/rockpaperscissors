@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Rock Paper Scissors</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <link rel="shortcut icon" href="favicon.ico">
+        <script type="application/javascript" src="d3.min.js">
+        </script>
+        <style type="text/css">
+        p { text-align: center; }
+        body { font-family: monospace; font-size: 15pt; }
+        .game, .game-result-table {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            justify-content: center;
+        }
+        li {
+           font-size: 80px;
+           list-style: none;
+           display: inline-block;
+           padding-right: 15px;
+           cursor: pointer;
+        }
+        table {
+           border-collapse: collapse;
+        }
+        td, th {
+           padding: 5px 15px 5px 0;
+           padding-right: 15px;
+           border-bottom: 1px solid black;
+        }
+        .summary {
+            background: #ffd42c;
+        }
+        .play-ground {
+            height: 90px;
+            vertical-align: middle;
+        }
+        .reset {
+            color: green;
+            font-weight: bold;
+            height: 45px;
+            width: 100px;
+            border-radius: 20px;
+        }
+        .computer-label {
+            padding-right: 20px;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .human-label {
+            padding-left: 20px;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .gameover {
+            text-align: center;
+            padding-top: 50px;
+            padding-bottom: 50px;
+            background: white;
+            display: none;
+        }
+        </style>
+    </head>
+
+    <body>
+        <div class="game">
+          <div>
+            <p> Click a hand below to play a round</p>
+            <ul class="human-controls">
+              <li class="rock">✊</li>
+              <li class="paper"> ✋</li>
+              <li class="scissors">✌</li>
+            </ul>
+          </div>
+          <div class="play-ground">
+            <span class="computer-label">Me</span>
+            <span class="computer"></span>
+            <span class="human"></span>
+            <span class="human-label">You</span>
+          </div>
+        </div>
+        <div class="gameover">
+            <button class="reset">Play again?</button>
+        </div>
+        <div class="game-result-table">
+            <table summary="Game results">
+             <thead>
+               <tr>
+                 <th>Me</th>
+                 <th>You</th>
+                 <th>Comments</th>
+               </tr>
+               <tr class="current-score summary"></tr>
+             </thead>
+             <tbody class="game-result"><tbody>
+            </table>
+        </div>
+
+        <script type="application/javascript" src="game.js"></script>
+    </body>
+</html>
