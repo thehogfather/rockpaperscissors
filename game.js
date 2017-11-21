@@ -1,11 +1,39 @@
 (() => {
   let gameHistory = []
   const ROCK = '✊', PAPER = '✋', SCISSORS = '✌'
+  const emojiLabels = { [ROCK]: 'ROCK', [PAPER]: 'PAPER', [SCISSORS]: 'SCISSORS' }
+  const pwnage = { [ROCK]: PAPER, [PAPER]: SCISSORS, [SCISSORS]: ROCK }
   const choiceLookUp = { ROCK, PAPER, SCISSORS }
   const distribution = { ROCK: 0.29, PAPER: 0.64, SCISSORS: 1 }
+  const getPlayerHandHistory = (gameHistory) => gameHistory.map(round => round[4])
+
+  const getPlayerDistribution = (handHistory) => {
+    if (!handHistory || handHistory.length < 6) {
+      return distribution
+    }
+    const humanDistribution = handHistory.reduce((a, b) => {
+      if (!a[b]) {
+        a[b] = 1
+      } else {
+        a[b] = a[b] + 1
+      }
+      return a
+    }, {})
+    const total = Object.keys(humanDistribution).map(key => humanDistribution[key]).reduce((a,b) => a + b, 0)
+    const tiers = Object.keys(humanDistribution).reduce((a, b) => {
+      const proportion = humanDistribution[b] / total
+      const pwnageHand = emojiLabels[pwnage[b]]
+      a[pwnageHand] = proportion
+      return a
+      // would have loved this one liner instead
+      // a[emojiLabels[pwnage[b]]] = humanDistribution[b]/total
+    }, {})
+    return tiers
+  }
 
   const computerPlay = () => {
     const choice = Math.random()
+    const distribution = getPlayerDistribution(getPlayerHandHistory(gameHistory))
     return choice <= distribution.ROCK ? ROCK
       : choice <= distribution.PAPER ? PAPER : SCISSORS
   }
@@ -43,7 +71,7 @@
     const defaultEmoticonSize = '30pt'
     const zoomedEmoticonSize = '60pt'
     const numberOfRounds = 30
-    let computerChoice = historyHead[3] || '', humanChoice = historyHead[4] || ''
+    let computerChoice = historyHead[3] || '🖖', humanChoice = historyHead[4] || '🖖'
     d3.select('.computer').html(computerChoice).transition().ease(d3.easeBounce).duration(500).style('font-size', zoomedEmoticonSize)
       .transition().style('font-size', defaultEmoticonSize)
     d3.select('.human').html(humanChoice).transition().ease(d3.easeBounce).duration(500).style('font-size', zoomedEmoticonSize)
@@ -82,6 +110,7 @@
   const initialiseInteractivity = () => {
     d3.selectAll('.human-controls li').on('click', () => playRound(choiceLookUp[d3.event.target.className.toUpperCase()]))
     d3.select('.reset').on('click', resetGame )
+    render(gameHistory)
   }
   initialiseInteractivity()
 })()
