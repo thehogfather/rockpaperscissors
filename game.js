@@ -8,17 +8,18 @@
   const getPlayerHandHistory = (gameHistory) => gameHistory.map(round => round[4])
 
   const getPlayerDistribution = (handHistory) => {
-    if (!handHistory || handHistory.length < 6) {
+    if (!handHistory || handHistory.length < 3) {
       return distribution
     }
-    const humanDistribution = handHistory.reduce((a, b) => {
-      if (!a[b]) {
-        a[b] = 1
-      } else {
-        a[b] = a[b] + 1
-      }
-      return a
-    }, {})
+    const humanDistribution = handHistory.filter((_, index) => index < 3)
+      .reduce((a, b) => {
+        if (!a[b]) {
+          a[b] = 1
+        } else {
+          a[b] = a[b] + 1
+        }
+        return a
+      }, {})
     const total = Object.keys(humanDistribution).map(key => humanDistribution[key]).reduce((a,b) => a + b, 0)
     const tiers = Object.keys(humanDistribution).reduce((a, b) => {
       const proportion = humanDistribution[b] / total
