@@ -1,7 +1,7 @@
-# No one wants -5pts :D
+# No one wants -5pts 🙄
+Clone this repo and run the game in chrome by double clicking the index.html file or type `open index.html` on a mac.
 
-Please run in chrome by double clicking the index.html file or type `open index.html` on a mac.
-
+# 🖖🖖🖖🖖
 This application is offline first.
 This application has some hard coding concepts (not hardcode) :-P
 This application tries and fails to use advanced emojis :omg:
